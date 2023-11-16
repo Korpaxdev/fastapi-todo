@@ -13,6 +13,8 @@ asyncpg = "^0.29.0"
 fastapi = "^0.104.1"
 uvicorn = { extras = ["standart"], version = "^0.24.0.post1" }
 pydantic-settings = "^2.1.0"
+bcrypt = "^4.0.1"
+pydantic = { extras = ["email"], version = "^2.5.1" }
 
 
 [build-system]
@@ -22,3 +24,6 @@ build-backend = "poetry.core.masonry.api"
 [tool.black]
 line-length = 120
 extend-exclude = "database/data/*"
+[tool.flake8]
+max-line-length = 120
+extend-exclude = ".venv"
