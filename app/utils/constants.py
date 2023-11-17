@@ -1,3 +1,4 @@
+from enum import Enum
 from typing import NamedTuple
 
 
@@ -10,3 +11,8 @@ class Errors(NamedTuple):
     USER_NOT_FOUND = "A user with this username or this password not found. Please check your username or password"
     WRONG_TOKEN = "Wrong token. Please check your token"
     EXPIRED_TOKEN = "Token expired"
+
+
+class TokenTypes(Enum):
+    REFRESH = "REFRESH"
+    ACCESS = "ACCESS"

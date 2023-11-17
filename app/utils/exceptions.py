@@ -1,6 +1,6 @@
 from fastapi import HTTPException, status
 
-from app.utils.error_messages import Errors
+from app.utils.constants import Errors
 
 
 class UserExistsException(HTTPException):

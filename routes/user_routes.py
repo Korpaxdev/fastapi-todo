@@ -10,6 +10,7 @@ from app.schemas.user_schemas import (
     UserResponseSchema,
 )
 from app.services.user_services import check_user_exists, find_user, insert_user
+from app.utils.constants import TokenTypes
 from app.utils.exceptions import TokenExpiredException, UserExistsException, UserNotFoundException, WrongTokenException
 from app.utils.password_utils import check_password
 from app.utils.token_utils import decode_sub, decode_token, generate_access_token, generate_refresh_token
@@ -39,7 +40,7 @@ async def get_access_token(token: RefreshTokenSchema):
     try:
         data = decode_token(token.refresh)
         sub = decode_sub(data.get("sub"))
-        if data.get("type") != "refresh" or not sub:
+        if data.get("type") != TokenTypes.REFRESH.name or not sub:
             raise WrongTokenException
         user = await find_user(UserModel.id == sub.get("id"))
         if not user:

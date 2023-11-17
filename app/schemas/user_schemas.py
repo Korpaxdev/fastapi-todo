@@ -2,7 +2,7 @@ import re
 
 from pydantic import BaseModel, EmailStr, Field, field_validator
 
-from app.utils.error_messages import Errors
+from app.utils.constants import Errors
 
 
 class BaseUserSchema(BaseModel):
