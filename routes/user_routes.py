@@ -40,7 +40,7 @@ async def get_access_token(token: RefreshTokenSchema):
     try:
         data = decode_token(token.refresh)
         sub = decode_sub(data.get("sub"))
-        if data.get("type") != TokenTypes.REFRESH.name or not sub:
+        if data.get("type") != TokenTypes.REFRESH.name or not isinstance(sub, dict):
             raise WrongTokenException
         user = await find_user(UserModel.id == sub.get("id"))
         if not user:
