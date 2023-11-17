@@ -18,6 +18,11 @@ class BaseUserSchema(BaseModel):
         return value
 
 
+class TokenResponseSchema(BaseModel):
+    access: str
+    refresh: str
+
+
 class UserResponseSchema(BaseModel):
     id: int
     email: EmailStr

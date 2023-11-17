@@ -6,3 +6,8 @@ from app.utils.error_messages import Errors
 class UserExistsException(HTTPException):
     def __init__(self) -> None:
         super().__init__(status.HTTP_409_CONFLICT, detail=Errors.USER_IS_EXISTS)
+
+
+class UserNotFoundException(HTTPException):
+    def __init__(self) -> None:
+        super().__init__(status.HTTP_404_NOT_FOUND, detail=Errors.USER_NOT_FOUND)
