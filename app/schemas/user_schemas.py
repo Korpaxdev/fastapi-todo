@@ -18,9 +18,16 @@ class BaseUserSchema(BaseModel):
         return value
 
 
-class TokenResponseSchema(BaseModel):
+class AccessTokeSchema(BaseModel):
     access: str
+
+
+class RefreshTokenSchema(BaseModel):
     refresh: str
+
+
+class TokenResponseSchema(AccessTokeSchema, RefreshTokenSchema):
+    pass
 
 
 class UserResponseSchema(BaseModel):

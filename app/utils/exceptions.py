@@ -11,3 +11,13 @@ class UserExistsException(HTTPException):
 class UserNotFoundException(HTTPException):
     def __init__(self) -> None:
         super().__init__(status.HTTP_404_NOT_FOUND, detail=Errors.USER_NOT_FOUND)
+
+
+class WrongTokenException(HTTPException):
+    def __init__(self) -> None:
+        super().__init__(status.HTTP_400_BAD_REQUEST, Errors.WRONG_TOKEN)
+
+
+class TokenExpiredException(HTTPException):
+    def __init__(self) -> None:
+        super().__init__(status.HTTP_400_BAD_REQUEST, Errors.EXPIRED_TOKEN)
