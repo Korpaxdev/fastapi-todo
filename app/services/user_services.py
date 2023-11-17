@@ -1,4 +1,4 @@
-from sqlalchemy import ColumnExpressionArgument, or_, select
+from sqlalchemy import ColumnExpressionArgument, select
 
 from app.schemas.user_schemas import BaseUserSchema
 from app.utils.password_utils import hash_password
@@ -23,4 +23,4 @@ async def find_user(criteria: ColumnExpressionArgument[bool]) -> UserModel | Non
 
 
 async def check_user_exists(user_data: BaseUserSchema) -> bool:
-    return bool(await find_user(or_(UserModel.email == user_data.email)))
+    return bool(await find_user(UserModel.email == user_data.email))
