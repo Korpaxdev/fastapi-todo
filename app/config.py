@@ -16,12 +16,16 @@ from app.utils.date_utils import parse_str_to_timedelta
 class DotEnvCustomSource(DotEnvSettingsSource):
     def prepare_field_value(self, field_name: str, field: FieldInfo, value: Any, value_is_complex: bool) -> Any:
         value = super().prepare_field_value(field_name, field, value, value_is_complex)
+        if not value:
+            return
         return parse_str_to_timedelta(value)
 
 
 class EnvCustomSource(EnvSettingsSource):
     def prepare_field_value(self, field_name: str, field: FieldInfo, value: Any, value_is_complex: bool) -> Any:
         value = super().prepare_field_value(field_name, field, value, value_is_complex)
+        if not value:
+            return
         return parse_str_to_timedelta(value)
 
 

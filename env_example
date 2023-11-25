@@ -1,0 +1,10 @@
+DEBUG: bool
+DB_ENGINE: str
+DB_NAME: str
+DB_USER: str
+DB_PASSWORD: str
+DB_HOST: str
+DB_PORT: int
+JWT_KEY: str
+JWT_ACCESS_EXPIRE: timedelta
+JWT_REFRESH_EXPIRE: timedelta
