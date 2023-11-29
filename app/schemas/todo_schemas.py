@@ -1,13 +1,17 @@
-from datetime import datetime
+from datetime import datetime, timedelta
+from typing import Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
-class TodoBaseSchema(BaseModel):
-    id: int
+class CreateTodoSchema(BaseModel):
     title: str
-    description: str
+    description: Optional[str] = None
+    expired: datetime = Field(examples=[datetime.now() + timedelta(days=10)])
+
+
+class TodoResponseSchema(CreateTodoSchema):
+    id: int
     created_at: datetime
-    expired: datetime
     is_completed: bool
     is_expired: bool
