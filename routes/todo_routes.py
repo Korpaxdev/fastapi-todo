@@ -14,9 +14,11 @@ UserType = Annotated[UserModel, Depends(get_current_user_dependency)]
 
 @todo_router.get("/", response_model=list[TodoResponseSchema])
 async def get_todos(user: UserType):
+    """Route for getting todo list. You need to log in"""
     return user.todos
 
 
 @todo_router.post("/", response_model=TodoResponseSchema)
 async def add_todo(todo: CreateTodoInputSchema, user: UserType):
+    """Route for adding new todo. You need to log in"""
     return await insert_todo(todo, user)

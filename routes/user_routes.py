@@ -21,6 +21,7 @@ user_router = APIRouter(prefix="/users", tags=["Users"])
 
 @user_router.post("/register", response_model=UserResponseSchema)
 async def register_user(user_data: BaseUserInputSchema):
+    """Register user route"""
     if await check_user_exists(user_data):
         raise UserExistsException
     return await insert_user(user_data)
@@ -28,6 +29,7 @@ async def register_user(user_data: BaseUserInputSchema):
 
 @user_router.post("/token", response_model=TokenResponseSchema)
 async def get_token(response: Response, user_data: BaseUserInputSchema):
+    """Route for getting access and refresh tokens"""
     user = await find_user(or_(UserModel.email == user_data.email))
     if not user or not check_password(user_data.password, user.hashed_password):
         raise UserNotFoundException
@@ -40,6 +42,7 @@ async def get_token(response: Response, user_data: BaseUserInputSchema):
 
 @user_router.post("/token/refresh", response_model=AccessTokenResponseSchema)
 async def get_access_token(token: Annotated[dict[str, Any], Depends(get_refresh_token_dependency)]):
+    """Route for getting access token by refresh token. You need to log in"""
     user = await find_user(UserModel.id == token["sub"].get("id"))
     if not user:
         raise WrongTokenException
