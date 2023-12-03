@@ -5,7 +5,7 @@ from pydantic import BaseModel, EmailStr, Field, field_validator
 from app.utils.constants import Errors
 
 
-class BaseUserSchema(BaseModel):
+class BaseUserInputSchema(BaseModel):
     email: EmailStr
     password: str = Field(min_length=10, examples=["MyTestPassword123"])
 
@@ -18,16 +18,12 @@ class BaseUserSchema(BaseModel):
         return value
 
 
-class AccessTokeSchema(BaseModel):
-    access: str
+class AccessTokenResponseSchema(BaseModel):
+    ACCESS: str
 
 
-class RefreshTokenSchema(BaseModel):
-    refresh: str
-
-
-class TokenResponseSchema(AccessTokeSchema, RefreshTokenSchema):
-    pass
+class TokenResponseSchema(AccessTokenResponseSchema):
+    REFRESH: str
 
 
 class UserResponseSchema(BaseModel):

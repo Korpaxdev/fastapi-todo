@@ -5,22 +5,37 @@ from fastapi.security import APIKeyHeader
 from jose import ExpiredSignatureError, JWTError
 
 from app.services.user_services import find_user
+from app.utils.constants import TokenTypes
 from app.utils.exceptions import UnauthorizedException
-from app.utils.token_utils import decode_sub, decode_token
+from app.utils.token_utils import decode_token_with_sub, is_valid_token
 from database.models import UserModel
-
-type TokenType = dict[str, Any]
 
 api_key_header = APIKeyHeader(name="Authorization")
 
+type TokenType = dict[str, Any]
 
-async def get_access_token_dependency(request: Request, authorization: str = Security(api_key_header)) -> TokenType:
+
+async def get_access_token_dependency(request: Request, authorization: str = Security(api_key_header)):
     try:
-        token = authorization or request.cookies.get("access")
+        token = authorization or request.cookies.get(TokenTypes.ACCESS.value)
         if not token:
             raise UnauthorizedException
-        decoded = decode_token(token)
-        decoded["sub"] = decode_sub(decoded.get("sub"))
+        decoded = decode_token_with_sub(token)
+        if not is_valid_token(TokenTypes.ACCESS, decoded):
+            raise UnauthorizedException
+        return decoded
+    except (JWTError, ExpiredSignatureError):
+        raise UnauthorizedException
+
+
+async def get_refresh_token_dependency(request: Request, authorization: str = Security(api_key_header)):
+    try:
+        token = authorization or request.cookies.get(TokenTypes.REFRESH.value)
+        if not token:
+            raise UnauthorizedException
+        decoded = decode_token_with_sub(token)
+        if not is_valid_token(TokenTypes.REFRESH, decoded):
+            raise UnauthorizedException
         return decoded
     except (JWTError, ExpiredSignatureError):
         raise UnauthorizedException

@@ -3,7 +3,7 @@ from typing import Annotated
 from fastapi import APIRouter, Depends
 
 from app.depends.user_depends import get_current_user_dependency
-from app.schemas.todo_schemas import CreateTodoSchema, TodoResponseSchema
+from app.schemas.todo_schemas import CreateTodoInputSchema, TodoResponseSchema
 from app.services.todo_services import insert_todo
 from database.models import UserModel
 
@@ -18,5 +18,5 @@ async def get_todos(user: UserType):
 
 
 @todo_router.post("/", response_model=TodoResponseSchema)
-async def add_todo(todo: CreateTodoSchema, user: UserType):
+async def add_todo(todo: CreateTodoInputSchema, user: UserType):
     return await insert_todo(todo, user)
