@@ -10,7 +10,7 @@ from app.utils.exceptions import UnauthorizedException
 from app.utils.token_utils import decode_token_with_sub, is_valid_token
 from database.models import UserModel
 
-api_key_header = APIKeyHeader(name="Authorization")
+api_key_header = APIKeyHeader(name="Authorization", auto_error=False)
 
 type TokenType = dict[str, Any]
 
